@@ -435,6 +435,7 @@
 
 (defun zone-nyan ()
   (delete-other-windows)
+  (setq cursor-type nil)
   (let ((time 0))
     (while (not (input-pending-p))
       (erase-buffer)
