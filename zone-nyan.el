@@ -441,6 +441,7 @@
       (erase-buffer)
       (insert (propertize " " 'display
                           (create-image (zone-nyan-image time) 'svg t)))
+      (message "You've nyaned for %s seconds" (/ time 10.0))
       (setq time (1+ time))
       (sit-for zone-nyan-interval))))
 
