@@ -103,8 +103,6 @@
                                           stripe-width stripe-height
                                           hex-code)
                           pieces)))))
-            (message "%s + %s * %s = %s + %s"
-                     initial-stripe-width stripes stripe-width left offset)
             pieces)))
     (if flip
         (zone-nyan-group x y
