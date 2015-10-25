@@ -433,6 +433,7 @@
 
 (defvar zone-nyan-interval (/ 1.0 10))
 
+;;;###autoload
 (defun zone-nyan ()
   (delete-other-windows)
   (setq cursor-type nil)
@@ -445,6 +446,7 @@
       (setq time (1+ time))
       (sit-for zone-nyan-interval))))
 
+;;;###autoload
 (defun zone-nyan-preview ()
   (interactive)
   (let ((zone-programs [zone-nyan]))
