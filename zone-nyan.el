@@ -410,6 +410,7 @@
          (face-x-offset (if (or (zerop frame) (> frame 3)) 0 1))
          (face-y-offset (if (or (< frame 2) (> frame 4)) 0 1))
 
+         ;; TODO fix error with too small window
          (window-data (zone-nyan-window-data))
          (width (car window-data))
          (height (cadr window-data))
