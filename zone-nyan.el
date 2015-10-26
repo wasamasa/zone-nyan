@@ -404,8 +404,8 @@
 ;;; frontend
 
 (defun zone-nyan-image (time)
-  (let* ((frame (% time 6))
-         (rainbow-flipped (not (zerop (% (/ time 2) 2))))
+  (let* ((frame (mod time 6))
+         (rainbow-flipped (not (zerop (mod (/ time 2) 2))))
          (pop-tart-offset (if (< frame 2) 0 1))
          (face-x-offset (if (or (zerop frame) (> frame 3)) 0 1))
          (face-y-offset (if (or (< frame 2) (> frame 4)) 0 1))
