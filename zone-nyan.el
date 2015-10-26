@@ -429,8 +429,6 @@
           (zone-nyan-pop-tart 25 (+ 25 pop-tart-offset))
           (zone-nyan-face (+ 35 face-x-offset) (+ 30 face-y-offset))))))))
 
-(defvar zone-nyan-preview-buffer-name "*zone nyan*")
-
 (defvar zone-nyan-interval (/ 1.0 10))
 
 ;;;###autoload
