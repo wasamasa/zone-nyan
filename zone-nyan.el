@@ -27,7 +27,11 @@
   `(svg (@ (xmlns "http://www.w3.org/2000/svg")
            (width ,(number-to-string width))
            (height ,(number-to-string height)))
-        (g (@ (transform ,(format "translate(%s,%s) scale(%s)"
+        (defs
+          (clipPath (@ (id "clip-path"))
+                    (rect (@ (x "0") (y "0") (width "70") (height "70")))))
+        (g (@ (style "clip-path: url(#clip-path);")
+              (transform ,(format "translate(%s,%s) scale(%s)"
                                   x-offset y-offset scale)))
            ,@body)))
 (put 'zone-nyan-svg 'lisp-indent-function 5)
