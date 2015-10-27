@@ -366,7 +366,7 @@
         (sxml-to-xml
          (zone-nyan-svg width height scale x-offset y-offset
            (zone-nyan-rect 0 0 70 70 zone-nyan-indigo)
-           (zone-nyan-rainbow 0 27 rainbow-flipped)
+           (zone-nyan-rainbow 0 26 rainbow-flipped)
            (zone-nyan-tail 19 32 frame)
            (zone-nyan-legs 23 41 frame)
            (zone-nyan-pop-tart 25 (+ 25 pop-tart-offset))
