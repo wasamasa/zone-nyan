@@ -347,6 +347,141 @@
     (zone-nyan-pixel 11  9       zone-nyan-black)
 
     (zone-nyan-pixel  9  7       zone-nyan-black)))
+
+(defun zone-nyan-star (x y frame)
+  (cond
+   ((= frame 0)
+    (zone-nyan-group x y
+      (zone-nyan-pixel 0 0     zone-nyan-white)))
+   ((= frame 1)
+    (zone-nyan-group x y
+      (zone-nyan-pixel 1 0     zone-nyan-white)
+      (zone-nyan-pixel 0 1     zone-nyan-white)
+      (zone-nyan-pixel 2 1     zone-nyan-white)
+      (zone-nyan-pixel 1 2     zone-nyan-white)))
+   ((= frame 2)
+    (zone-nyan-group x y
+      (zone-nyan-rect  2 0 1 2 zone-nyan-white)
+      (zone-nyan-rect  0 2 2 1 zone-nyan-white)
+      (zone-nyan-rect  3 2 2 1 zone-nyan-white)
+      (zone-nyan-rect  2 3 1 2 zone-nyan-white)))
+   ((= frame 3)
+    (zone-nyan-group x y
+      (zone-nyan-rect  3 0 1 2 zone-nyan-white)
+      (zone-nyan-rect  0 3 2 1 zone-nyan-white)
+      (zone-nyan-pixel 3 3     zone-nyan-white)
+      (zone-nyan-rect  5 3 2 1 zone-nyan-white)
+      (zone-nyan-rect  3 5 1 2 zone-nyan-white)))
+   ((= frame 4)
+    (zone-nyan-group x y
+      (zone-nyan-pixel 3 0     zone-nyan-white)
+      (zone-nyan-pixel 1 1     zone-nyan-white)
+      (zone-nyan-pixel 5 1     zone-nyan-white)
+      (zone-nyan-pixel 0 3     zone-nyan-white)
+      (zone-nyan-pixel 6 3     zone-nyan-white)
+      (zone-nyan-pixel 1 5     zone-nyan-white)
+      (zone-nyan-pixel 5 5     zone-nyan-white)
+      (zone-nyan-pixel 3 6     zone-nyan-white)))
+   ((= frame 5)
+    (zone-nyan-group x y
+      (zone-nyan-pixel 3 0     zone-nyan-white)
+      (zone-nyan-pixel 0 3     zone-nyan-white)
+      (zone-nyan-pixel 6 3     zone-nyan-white)
+      (zone-nyan-pixel 3 6     zone-nyan-white)))))
+
+(defun zone-nyan-stars (x y frame)
+  (cond
+   ((= frame 0)
+    (zone-nyan-group x y
+      (zone-nyan-star 41  0 1)
+      (zone-nyan-star 65 12 3)
+      (zone-nyan-star  0 21 1)
+      (zone-nyan-star  8 41 5)
+      (zone-nyan-star 69 56 0)
+      (zone-nyan-star 36 64 2)))
+   ((= frame 1)
+    (zone-nyan-group x y
+      (zone-nyan-star 34 -1 2)
+      (zone-nyan-star 57  7 4)
+      (zone-nyan-star  5 44 0)
+      (zone-nyan-star 66 56 0)
+      (zone-nyan-star 27 63 3)))
+   ((= frame 2)
+    (zone-nyan-group x y
+      (zone-nyan-star 25 -2 3)
+      (zone-nyan-star 49  7 5)
+      (zone-nyan-star 66 19 3)
+      (zone-nyan-star  0 43 1)
+      (zone-nyan-star 57 53 5)
+      (zone-nyan-star 18 63 4)))
+   ((= frame 3)
+    (zone-nyan-group x y
+      (zone-nyan-star 16 -2 4)
+      (zone-nyan-star 46 10 0)
+      (zone-nyan-star 58 19 4)
+      (zone-nyan-star 48 53 4)
+      (zone-nyan-star  9 63 5)))
+   ((= frame 4)
+    (zone-nyan-group x y
+      (zone-nyan-star  7 -2 5)
+      (zone-nyan-star 41  9 1)
+      (zone-nyan-star 50 19 5)
+      (zone-nyan-star 39 53 3)
+      (zone-nyan-star  6 66 0)))
+   ((= frame 5)
+    (zone-nyan-group x y
+      (zone-nyan-star  4  1 0)
+      (zone-nyan-star 34  8 2)
+      (zone-nyan-star 47 22 0)
+      (zone-nyan-star 66 41 3)
+      (zone-nyan-star 32 54 2)
+      (zone-nyan-star  1 65 1)))
+   ((= frame 6)
+    (zone-nyan-group x y
+      (zone-nyan-star -1  0 1)
+      (zone-nyan-star 25  7 3)
+      (zone-nyan-star 42 21 1)
+      (zone-nyan-star 58 41 4)
+      (zone-nyan-star 27 55 1)))
+   ((= frame 7)
+    (zone-nyan-group x y
+      (zone-nyan-star 16  7 4)
+      (zone-nyan-star 35 20 2)
+      (zone-nyan-star 50 41 5)
+      (zone-nyan-star 24 56 0)
+      (zone-nyan-star 67 63 3)))
+   ((= frame 8)
+    (zone-nyan-group x y
+      (zone-nyan-star 65 -2 3)
+      (zone-nyan-star  7  7 5)
+      (zone-nyan-star 26 19 3)
+      (zone-nyan-star 44 44 0)
+      (zone-nyan-star 15 53 5)
+      (zone-nyan-star 59 63 4)))
+   ((= frame 9)
+    (zone-nyan-group x y
+      (zone-nyan-star 57 -2 4)
+      (zone-nyan-star  4 10 0)
+      (zone-nyan-star 17 19 4)
+      (zone-nyan-star 35 42 2)
+      (zone-nyan-star  7 53 4)
+      (zone-nyan-star 51 63 5)))
+   ((= frame 10)
+    (zone-nyan-group x y
+      (zone-nyan-star 49 -2 5)
+      (zone-nyan-star -1  9 1)
+      (zone-nyan-star  8 19 5)
+      (zone-nyan-star 26 41 3)
+      (zone-nyan-star -1 53 3)
+      (zone-nyan-star 48 66 0)))
+   ((= frame 11)
+    (zone-nyan-group x y
+      (zone-nyan-star 46  1 0)
+      (zone-nyan-star  5 22 0)
+      (zone-nyan-star 17 41 4)
+      (zone-nyan-star -4 53 4)
+      (zone-nyan-star 43 65 1)))))
+
 
 ;;; frontend
 
@@ -367,6 +502,7 @@
          (zone-nyan-svg width height scale x-offset y-offset
            (zone-nyan-rect 0 0 70 70 zone-nyan-indigo)
            (zone-nyan-rainbow 0 26 rainbow-flipped)
+           (zone-nyan-stars 0 0 star-frame)
            (zone-nyan-tail 19 32 frame)
            (zone-nyan-legs 23 41 frame)
            (zone-nyan-pop-tart 25 (+ 25 pop-tart-offset))
