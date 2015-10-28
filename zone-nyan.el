@@ -20,8 +20,10 @@
 (defvar zone-nyan-rouge  "#ff9999")
 (defvar zone-nyan-bread  "#ffcc99")
 
+(defvar zone-nyan-size 70)
+
 (defun zone-nyan-scale (window-width window-height)
-  (/ (min window-width window-height) 70))
+  (/ (min window-width window-height) zone-nyan-size))
 
 (defun zone-nyan-svg (width height scale x-offset y-offset &rest body)
   `(svg (@ (xmlns "http://www.w3.org/2000/svg")
@@ -29,7 +31,9 @@
            (height ,(number-to-string height)))
         (defs
           (clipPath (@ (id "clip-path"))
-                    (rect (@ (x "0") (y "0") (width "70") (height "70")))))
+                    (rect (@ (x "0") (y "0")
+                             (width ,(number-to-string zone-nyan-size))
+                             (height ,(number-to-string zone-nyan-size))))))
         (g (@ (style "clip-path: url(#clip-path);")
               (transform ,(format "translate(%s,%s) scale(%s)"
                                   x-offset y-offset scale)))
@@ -500,11 +504,11 @@
              (pop-tart-offset (if (< frame 2) 0 1))
              (face-x-offset (if (or (zerop frame) (> frame 3)) 0 1))
              (face-y-offset (if (or (< frame 2) (> frame 4)) 0 1))
-             (x-offset (floor (/ (- width (* 70 scale)) 2.0)))
-             (y-offset (floor (/ (- height (* 70 scale)) 2.0))))
+             (x-offset (floor (/ (- width (* zone-nyan-size scale)) 2.0)))
+             (y-offset (floor (/ (- height (* zone-nyan-size scale)) 2.0))))
         (sxml-to-xml
          (zone-nyan-svg width height scale x-offset y-offset
-           (zone-nyan-rect 0 0 70 70 zone-nyan-indigo)
+           (zone-nyan-rect 0 0 zone-nyan-size zone-nyan-size zone-nyan-indigo)
            (zone-nyan-rainbow 0 26 rainbow-flipped)
            (zone-nyan-stars 0 0 star-frame)
            (zone-nyan-tail 19 32 frame)
