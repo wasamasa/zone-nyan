@@ -1,7 +1,7 @@
 (require 'esxml)
 
 
-;;; helpers
+;;; palette
 
 (defvar zone-nyan-white  "#ffffff")
 (defvar zone-nyan-gray   "#999999")
@@ -19,6 +19,9 @@
 (defvar zone-nyan-pink   "#ff3399")
 (defvar zone-nyan-rouge  "#ff9999")
 (defvar zone-nyan-bread  "#ffcc99")
+
+
+;;; helpers
 
 (defvar zone-nyan-size 70)
 
