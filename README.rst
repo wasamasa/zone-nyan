@@ -12,8 +12,8 @@ Requires a graphical Emacs instance with SVG support.
 Installation
 ------------
 
-Install via `quelpa <https://github.com/quelpa/quelpa>`_ with ``M-:
-(quelpa '(zone-nyan :fetcher github :repo "wasamasa/zone-nyan"))``.
+Install via ``package.el`` from `Marmalade
+<https://marmalade-repo.org/>`_.
 
 Usage
 -----
