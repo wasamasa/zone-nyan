@@ -525,7 +525,9 @@
 (defun zone-nyan ()
   (delete-other-windows)
   (setq cursor-type nil)
-  (let ((time 0))
+  (let ((time 0)
+        ;; HACK: zone aborts on read-only buffers
+        (inhibit-read-only t))
     (while (not (input-pending-p))
       (erase-buffer)
       (insert (propertize " " 'display
