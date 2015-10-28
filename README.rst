@@ -1,8 +1,7 @@
 zone-nyan
 =========
 
-`Screencast
-<https://raw.github.com/wasamasa/zone-nyan/master/img/screencast.gif>`_
+.. image:: https://raw.github.com/wasamasa/zone-nyan/master/img/screencast.gif
 
 About
 -----
