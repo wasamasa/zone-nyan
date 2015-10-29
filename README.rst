@@ -13,7 +13,8 @@ Installation
 ------------
 
 Install via ``package.el`` from `Marmalade
-<https://marmalade-repo.org/>`_.
+<https://marmalade-repo.org/>`_ or `MELPA <https://melpa.org/>`_ or
+`MELPA Stable <https://stable.melpa.org>`_.
 
 Usage
 -----
