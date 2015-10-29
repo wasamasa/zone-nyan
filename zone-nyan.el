@@ -60,12 +60,21 @@
 
 ;;; helpers
 
-(defvar zone-nyan-size 70)
+(defvar zone-nyan-size 70
+  "Virtual canvas size.")
 
-(defun zone-nyan-scale (window-width window-height)
-  (/ (min window-width window-height) zone-nyan-size))
+(defun zone-nyan-scale (width height)
+  "Calculate the maximum scaling factor given WIDTH and HEIGHT.
+The result describes how large a tile in a grid with
+`zone-nyan-size' as size can be."
+  (/ (min width height) zone-nyan-size))
 
 (defun zone-nyan-svg (width height scale x-offset y-offset &rest body)
+  "Wrap BODY in a SVG root element and return the appropriate SXML.
+WIDTH and HEIGHT designate the dimensions in pixels, SCALE,
+X-OFFSET and Y-OFFSET transform the virtual canvas to a pixel art
+grid.  Additionally to that, clipping of the virtual canvas is
+ensured."
   `(svg (@ (xmlns "http://www.w3.org/2000/svg")
            (width ,(number-to-string width))
            (height ,(number-to-string height)))
@@ -81,11 +90,16 @@
 (put 'zone-nyan-svg 'lisp-indent-function 5)
 
 (defun zone-nyan-group (x y &rest body)
+  "Wrap BODY in a SVG group element at X and Y and return the appropriate SXML.
+X and Y are interpreted as grid coordinates."
   `(g (@ (transform ,(format "translate(%s,%s)" x y)))
       ,@body))
 (put 'zone-nyan-group 'lisp-indent-function 2)
 
 (defun zone-nyan-rect (x y width height fill)
+  "Returns a SVG rect element as SXML.
+X and Y are interpreted as grid coordinates, WIDTH and HEIGHT are
+interpreted as grid units, FILL is a hex code string."
   `(rect (@ (x ,(number-to-string x))
             (y ,(number-to-string y))
             (width ,(number-to-string width))
@@ -93,12 +107,17 @@
             (fill ,fill))))
 
 (defun zone-nyan-pixel (x y fill)
+  "Returns a SVC rect element sized 1x1 as SXML.
+X and Y are interpreted as grid coordinates, FILL is a hex code
+string."
   (zone-nyan-rect x y 1 1 fill))
 
 
 ;;; components
 
 (defun zone-nyan-rainbow (x y flip)
+  "Return SXML for the rainbow at X|Y.
+If FLIP is non-nil, the rainbow will be flipped horizontally."
   (if flip
       (zone-nyan-group x y
         (zone-nyan-rect  0  0 2 3 zone-nyan-red)
@@ -162,6 +181,7 @@
       (zone-nyan-rect 19 15 8 3 zone-nyan-violet))))
 
 (defun zone-nyan-tail (x y frame)
+  "Return SXML for the nyan cat tail at X|Y for FRAME."
   (cond
    ((= frame 0)
     (zone-nyan-group x y
@@ -216,6 +236,7 @@
       (zone-nyan-pixel  6  3     zone-nyan-gray)))))
 
 (defun zone-nyan-legs (x y frame)
+  "Return SXML for the nyan cat legs at X|Y for FRAME."
   (cond
    ((= frame 0)
     (zone-nyan-group x y
@@ -330,6 +351,7 @@
       (zone-nyan-rect  21  3 2 1 zone-nyan-gray)))))
 
 (defun zone-nyan-pop-tart (x y)
+  "Return SXML for the pop tart at X|Y."
   (zone-nyan-group x y
     (zone-nyan-rect   2  0 17 18 zone-nyan-black)
     (zone-nyan-rect   1  1 19 16 zone-nyan-black)
@@ -354,6 +376,7 @@
     (zone-nyan-pixel  4 14       zone-nyan-pink)))
 
 (defun zone-nyan-face (x y)
+  "Return SXML for the nyan cat face at X|Y."
   (zone-nyan-group x y
     (zone-nyan-rect   2  0  2  1 zone-nyan-black)
     (zone-nyan-rect   1  1  4  2 zone-nyan-black)
@@ -397,6 +420,7 @@
     (zone-nyan-pixel  9  7       zone-nyan-black)))
 
 (defun zone-nyan-star (x y frame)
+  "Return SXML for a star at X|Y for FRAME."
   (cond
    ((= frame 0)
     (zone-nyan-group x y
@@ -438,6 +462,7 @@
       (zone-nyan-pixel 3 6     zone-nyan-white)))))
 
 (defun zone-nyan-stars (x y frame)
+  "Return SXML holding a star constellation at X|Y for FRAME."
   (cond
    ((= frame 0)
     (zone-nyan-group x y
@@ -534,6 +559,7 @@
 ;;; frontend
 
 (defun zone-nyan-image (time)
+  "Return a SVG string for a point in TIME."
   (let* ((width (window-body-width nil t))
          (height (window-body-height nil t))
          (scale (zone-nyan-scale width height)))
@@ -556,10 +582,12 @@
            (zone-nyan-pop-tart 25 (+ 25 pop-tart-offset))
            (zone-nyan-face (+ 35 face-x-offset) (+ 30 face-y-offset))))))))
 
-(defvar zone-nyan-interval (/ 1.0 10))
+(defvar zone-nyan-interval (/ 1.0 10)
+  "Amount of time to wait until displaying the next frame.")
 
 ;;;###autoload
 (defun zone-nyan ()
+  "Zone out with nyan cat!"
   (delete-other-windows)
   (setq cursor-type nil)
   (let ((time 0)
@@ -575,6 +603,7 @@
 
 ;;;###autoload
 (defun zone-nyan-preview ()
+  "Preview the `zone-nyan' zone program."
   (interactive)
   (let ((zone-programs [zone-nyan]))
     (zone)))
