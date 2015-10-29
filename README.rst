@@ -23,7 +23,8 @@ Run ``M-x zone-nyan-preview`` for a preview (yes, zone doesn't have a
 preview command for checking out its programs).  If you're sure you
 want zone to only use this zone program, add ``(setq zone-programs
 [zone-nyan])`` to your init file and use either ``M-x zone`` for
-instant gratification or ``M-z zone-mode`` for a screensaver.
+instant gratification or ``M-x zone-when-idle`` after loading
+``zone.el`` for a screensaver.
 
 Contributing
 ------------
