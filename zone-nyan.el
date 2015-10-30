@@ -597,7 +597,7 @@ If FLIP is non-nil, the rainbow will be flipped horizontally."
       (erase-buffer)
       (insert (propertize " " 'display
                           (create-image (zone-nyan-image time) 'svg t)))
-      (message "You've nyaned for %s seconds" (/ time 10.0))
+      (message "You've nyaned for %.1f seconds" (/ time 10.0))
       (setq time (1+ time))
       (sit-for zone-nyan-interval))))
 
