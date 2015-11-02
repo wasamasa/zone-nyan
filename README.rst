@@ -69,7 +69,7 @@ idea how to do better.
 Q: I've found an error, but all Emacs says is that you were zoning out
 when writing zone-nyan...
 
-A: I don't know why, but zone bypassed regular Emacs error handling
+A: I don't know why, but zone bypasses regular Emacs error handling
 and displays an useless message instead.  Use ``M-x
 toggle-debug-on-error``, then ``M-: (zone-nyan-image 0)`` and paste
 the resulting Backtrace on `Gist <https://gist.github.com/>`_.  In the
