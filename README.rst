@@ -26,6 +26,19 @@ want zone to only use this zone program, add ``(setq zone-programs
 instant gratification or ``M-x zone-when-idle`` after loading
 ``zone.el`` for a screensaver.
 
+There's also sound support.  Customize ``zone-nyan-bg-music-program``
+to the CLI music player of your choice and ``zone-nyan-bg-music-args``
+to a list of additional arguments.  Assuming you're using ``mplayer``
+and have downloaded `the original music
+<http://www.nyan.cat/music/original.mp3>`_, insert the following in
+your init file:
+
+.. code:: elisp
+
+    (setq zone-nyan-bg-music-program "mplayer"
+          zone-nyan-bg-music-args
+          `("-loop" "0" ,(expand-file-name "~/Downloads/original.mp3")))
+
 Contributing
 ------------
 
@@ -43,13 +56,6 @@ A: Emacs has `an image cache`_.  The first 12 frames are unique, the
 subsequent ones are served from the image cache (until a resize change
 happens).  You shouldn't see this though unless you're on a slow
 computer or are *not* using the byte-compiled file.
-
-Q: How about sound support?
-
-A: It's easy enough to start a subprocess for playing music, but hard
-to do unconditional cleanup after a zone program exits.  Use
-`nyan-mode`_ and its sound support or start and stop the music
-yourself.
 
 Q: Will there be a widescreen version?
 
