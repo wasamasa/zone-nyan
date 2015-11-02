@@ -72,10 +72,12 @@ when writing zone-nyan...
 A: I don't know why, but zone bypassed regular Emacs error handling
 and displays an useless message instead.  Use ``M-x
 toggle-debug-on-error``, then ``M-: (zone-nyan-image 0)`` and paste
-the resulting Backtrace on `Gist <https://gist.github.com/>`_.  Then
-open a new bug report with a link to the backtrace plus further
-information on your Emacs build, operating system, origin and version
-of zone-nyan.
+the resulting Backtrace on `Gist <https://gist.github.com/>`_.  In the
+unlikely case that this doesn't yield a backtrace, switch to a buffer
+you don't mind losing and use ``M-: (zone-nyan)`` in it.  Then open a
+new bug report with a link to the backtrace plus further information
+on your Emacs build, operating system, origin and version of
+zone-nyan.
 
 .. _an image cache: https://www.gnu.org/software/emacs/manual/html_node/elisp/Image-Cache.html
 .. _nyan-mode: https://github.com/TeMPOraL/nyan-mode
