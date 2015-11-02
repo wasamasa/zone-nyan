@@ -37,6 +37,11 @@
 
 (require 'esxml)
 
+(defgroup zone-nyan nil
+  "Zone out with nyan cat"
+  :group 'zone
+  :prefix "zone-nyan-")
+
 
 ;;; palette
 
@@ -582,8 +587,10 @@ If FLIP is non-nil, the rainbow will be flipped horizontally."
            (zone-nyan-pop-tart 25 (+ 25 pop-tart-offset))
            (zone-nyan-face (+ 35 face-x-offset) (+ 30 face-y-offset))))))))
 
-(defvar zone-nyan-interval (/ 1.0 10)
-  "Amount of time to wait until displaying the next frame.")
+(defcustom zone-nyan-interval (/ 1.0 10)
+  "Amount of time to wait until displaying the next frame."
+  :type 'float
+  :group 'zone-nyan)
 
 ;;;###autoload
 (defun zone-nyan ()
