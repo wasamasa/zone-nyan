@@ -601,9 +601,10 @@ If FLIP is non-nil, the rainbow will be flipped horizontally."
 (defcustom zone-nyan-bg-music-args nil
   "Optional list of arguments for `zone-nyan-bg-music-program'."
   :type '(repeat string)
-  :group 'circe)
+  :group 'zone-nyan)
 
-(defvar zone-nyan-bg-music-process nil)
+(defvar zone-nyan-bg-music-process nil
+  "Current BG music process.")
 
 ;;;###autoload
 (defun zone-nyan ()
