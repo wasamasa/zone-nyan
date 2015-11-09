@@ -587,7 +587,7 @@ If FLIP is non-nil, the rainbow will be flipped horizontally."
            (zone-nyan-pop-tart 25 (+ 25 pop-tart-offset))
            (zone-nyan-face (+ 35 face-x-offset) (+ 30 face-y-offset))))))))
 
-(defcustom zone-nyan-interval (/ 1.0 10)
+(defcustom zone-nyan-interval 0.07
   "Amount of time to wait until displaying the next frame."
   :type 'float
   :group 'zone-nyan)
