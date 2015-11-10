@@ -606,13 +606,28 @@ If FLIP is non-nil, the rainbow will be flipped horizontally."
 (defvar zone-nyan-bg-music-process nil
   "Current BG music process.")
 
+(defvar zone-nyan-progress-timer nil
+  "Timer for displaying the progress.
+It fires every 100ms.")
+
+(defvar zone-nyan-progress 0
+  "Holds the current progress of the timer.")
+
+(defun zone-nyan-progress ()
+  "Progress function.
+It informs the user just how many seconds they've wasted on
+watching nyan cat run."
+  (message "You've nyaned for %.1f seconds"
+           (/ zone-nyan-progress 10.0))
+  (setq zone-nyan-progress (1+ zone-nyan-progress)))
+
 ;;;###autoload
 (defun zone-nyan ()
   "Zone out with nyan cat!"
   (delete-other-windows)
   (setq cursor-type nil)
   (let ((time 0)
-        ;; HACK: zone aborts on read-only buffers
+        ;; HACK zone aborts on read-only buffers
         (inhibit-read-only t))
     (unwind-protect
         (progn
@@ -625,17 +640,20 @@ If FLIP is non-nil, the rainbow will be flipped horizontally."
               (error
                (message "Couldn't start background music")
                (sit-for 5))))
+          (setq zone-nyan-progress 0
+                zone-nyan-progress-timer
+                (run-at-time 0 0.1 'zone-nyan-progress))
           (while (not (input-pending-p))
             (erase-buffer)
             (insert (propertize " " 'display
                                 (create-image (zone-nyan-image time) 'svg t)))
             (goto-char (point-min))
-            (message "You've nyaned for %.1f seconds"
-                     (* time zone-nyan-interval))
-            (setq time (1+ time))
-            (sit-for zone-nyan-interval)))
+            (sit-for zone-nyan-interval)
+            (setq time (1+ time))))
       (when zone-nyan-bg-music-process
-        (delete-process zone-nyan-bg-music-process)))))
+        (delete-process zone-nyan-bg-music-process))
+      (when zone-nyan-progress-timer
+        (cancel-timer zone-nyan-progress-timer)))))
 
 ;;;###autoload
 (defun zone-nyan-preview ()
