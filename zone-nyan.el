@@ -27,8 +27,8 @@
 
 ;;; Commentary:
 
-;; A zone program displaying the infamous nyan cat animation.
-;; Best viewed in a graphical Emacs instance with SVG support.
+;; A zone program displaying the infamous nyan cat animation.  Best
+;; viewed in a graphical Emacs instance with SVG support.
 
 ;; See the README for more info:
 ;; https://github.com/wasamasa/zone-nyan
@@ -63,6 +63,18 @@
     (rouge  :gui "#ff9999" :term "color-210" :ascii "()")
     (bread  :gui "#ffcc99" :term "color-216" :ascii "##")
   "Palette for GUI, 256 color and ASCII display of nyan cat."))
+
+(defcustom zone-nyan-gui-type 'svg
+  "Rendering type on graphical displays."
+  :type '(choice (const :tag "SVG" svg)
+                 (const :tag "Text" text))
+  :group 'zone-nyan)
+
+(defcustom zone-nyan-term-type 'color
+  "Rendering type on textual displays."
+  :type '(choice (const :tag "Color" color)
+                 (const :tag "ASCII" ascii))
+  :group 'zone-nyan)
 
 
 ;;; data
@@ -591,12 +603,113 @@ component, width, height and fill color which is looked up in
           (+ 35 face-x-offset) (+ 30 face-y-offset) (zone-nyan-face)))))))
 
 
+;;; text
+
+(defvar zone-nyan-text-size 40
+  "Virtual canvas size.")
+
+(defun zone-nyan-text-canvas (init)
+  "Returns an empty text canvas to paint rectangles on.
+INIT is the initial color to fill it with."
+  (let ((canvas (make-vector zone-nyan-text-size nil)))
+    (dotimes (i zone-nyan-text-size)
+      (aset canvas i (make-vector zone-nyan-text-size init)))
+    canvas))
+
+(defun zone-nyan-text-in-bounds (x y)
+  "Non-nil if X|Y is a coordinate not out of bounds."
+  (and (>= x 0) (< x zone-nyan-text-size)
+       (>= y 0) (< y zone-nyan-text-size)))
+
+(defun zone-nyan-text-pixel (canvas x y fill)
+  "Paint a pixel on CANVAS at X|Y with FILL."
+  (when (zone-nyan-text-in-bounds x y)
+    (aset (aref canvas y) x fill)))
+
+(defun zone-nyan-text-rect (canvas x y width height fill)
+  "Paint a rectangle on CANVAS at X|Y with FILL.
+WIDTH and HEIGHT are its dimensions."
+  (dotimes (i height)
+    (dotimes (j width)
+      (zone-nyan-text-pixel canvas (+ x j) (+ y i) fill))))
+
+(defun zone-nyan-text-paint-canvas (canvas &rest body)
+  "Paint groups of rectangles to CANVAS.
+BODY is a list where every three items are the X offset, Y offset
+and a list of rectangles.  Each rectangle is represented as a
+vector with a X and Y component, width, height and fill color."
+  (while body
+    (let* ((x-offset (pop body))
+           (y-offset (pop body))
+           (rects (pop body)))
+      (dolist (rect rects)
+        (let* ((x (aref rect 0))
+               (y (aref rect 1))
+               (width (aref rect 2))
+               (height (aref rect 3))
+               (fill (aref rect 4)))
+          (zone-nyan-text-rect canvas (+ x-offset x) (+ y-offset y)
+                               width height fill))))))
+
+(defun zone-nyan-text-to-string (canvas)
+  "Return a textual representation of CANVAS."
+  (with-temp-buffer
+    (dotimes (i (length canvas))
+      (dotimes (j (length (aref canvas 0)))
+        (let* ((color (aref (aref canvas i) j))
+               (mappings (cdr (assoc color zone-nyan-palette))))
+          (cond
+           ((eq zone-nyan-gui-type 'text)
+            (let ((fill (plist-get mappings :gui)))
+              (insert (propertize "  " 'face `(:background ,fill)))))
+           ((eq zone-nyan-term-type 'color)
+            (let ((fill (plist-get mappings :term)))
+              (insert (propertize "  " 'face `(:background ,fill)))))
+           ((eq zone-nyan-term-type 'ascii)
+            (insert (plist-get mappings :ascii))))))
+      (insert "\n"))
+    (buffer-string)))
+
+(defun zone-nyan-text-image (time)
+  "Return a buffer string for a point in TIME."
+  (let ((width (window-body-width))
+        (height (window-body-height)))
+    (if (or (< width 80) (< height 40))
+        (format "zone-nyan requires a 80x40 canvas\ncurrent dimensions: %dx%d"
+                width height)
+      (let* ((canvas (zone-nyan-text-canvas 'indigo))
+             (frame (mod time 6))
+             (star-frame (mod time 12))
+             (rainbow-flipped (not (zerop (mod (/ time 2) 2))))
+             (pop-tart-offset (if (< frame 2) 0 1))
+             (face-x-offset (if (or (zerop frame) (> frame 3)) 0 1))
+             (face-y-offset (if (or (< frame 2) (> frame 4)) 0 1)))
+        (zone-nyan-text-paint-canvas
+         canvas
+         -15 11 (zone-nyan-rainbow rainbow-flipped)
+         -15 -15 (zone-nyan-stars star-frame)
+         4 17 (zone-nyan-tail frame)
+         8 26 (zone-nyan-legs frame)
+         10 (+ 10 pop-tart-offset) (zone-nyan-pop-tart)
+         (+ 20 face-x-offset) (+ 15 face-y-offset) (zone-nyan-face))
+        (zone-nyan-text-to-string canvas)))))
+
+
 ;;; frontend
 
 (defun zone-nyan-image (time)
   "Create an image of nyan cat at TIME."
-  (propertize " " 'display
-              (create-image (zone-nyan-svg-image time) 'svg t)))
+  (if (display-graphic-p)
+      (cond
+       ((eq zone-nyan-gui-type 'svg)
+        (propertize " " 'display
+                    (create-image (zone-nyan-svg-image time) 'svg t)))
+       ((eq zone-nyan-gui-type 'text)
+        (zone-nyan-text-image time))
+       (t (user-error "Invalid value for `zone-nyan-gui-type'")))
+    (if (memq zone-nyan-term-type '(color ascii))
+        (zone-nyan-text-image time)
+       (user-error "Invalid value for `zone-nyan-term-type'"))))
 
 (defcustom zone-nyan-interval 0.07
   "Amount of time to wait until displaying the next frame."

@@ -6,8 +6,8 @@ zone-nyan
 About
 -----
 
-A graphical zone program displaying the infamous nyan cat animation.
-Requires a graphical Emacs instance with SVG support.
+A zone program displaying the infamous nyan cat animation.  Best
+viewed in a graphical Emacs instance with SVG support.
 
 Installation
 ------------
@@ -25,6 +25,11 @@ want zone to only use this zone program, add ``(setq zone-programs
 [zone-nyan])`` to your init file and use either ``M-x zone`` for
 instant gratification or ``M-x zone-when-idle`` after loading
 ``zone.el`` for a screensaver.
+
+Graphical instances use SVG rendering and textual instances ANSI color
+escapes on a 256 color palette.  You can alternatively make the GUI
+render text by customizing ``zone-nyan-gui-type`` and the terminal
+render ASCII art by customizing ``zone-nyan-term-type``.
 
 There's also sound support.  Customize ``zone-nyan-bg-music-program``
 to the CLI music player of your choice and ``zone-nyan-bg-music-args``
