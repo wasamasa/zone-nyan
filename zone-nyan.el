@@ -4,7 +4,7 @@
 
 ;; Author: Vasilij Schneidermann <v.schneidermann@gmail.com>
 ;; URL: https://github.com/wasamasa/zone-nyan
-;; Version: 0.2.1
+;; Version: 0.2.2
 ;; Package-Requires: ((esxml "0.3.1"))
 ;; Keywords: zone
 
