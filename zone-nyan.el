@@ -1,6 +1,6 @@
 ;;; zone-nyan.el --- Zone out with nyan cat
 
-;; Copyright (C) 2015 Vasilij Schneidermann <v.schneidermann@gmail.com>
+;; Copyright (C) 2015-2016 Vasilij Schneidermann <v.schneidermann@gmail.com>
 
 ;; Author: Vasilij Schneidermann <v.schneidermann@gmail.com>
 ;; URL: https://github.com/wasamasa/zone-nyan
