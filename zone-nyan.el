@@ -729,9 +729,9 @@ vector with a X and Y component, width, height and fill color."
   :group 'zone-nyan)
 
 (defcustom zone-nyan-hide-progress nil
-  "Won’t report progress information if set."
+  "Won't report progress information if set."
   :type 'boolean
-  :group zone-nyan)
+  :group 'zone-nyan)
 
 (defvar zone-nyan-bg-music-process nil
   "Current BG music process.")
